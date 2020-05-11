@@ -1,0 +1,19 @@
+body {
+   text-align: center;
+   font-family: 'Segoe UI', 'Helvetica', sans-serif;
+   font-size: medium;
+   width: 75vw;
+}
+table, tr, td, th {
+   border: 1px solid black;
+   border-collapse: collapse;
+}
+tr {
+   height: 30px;
+}
+th {
+   background-color: lightgray;
+}
+.bold {
+   font-weight: bold;
+}

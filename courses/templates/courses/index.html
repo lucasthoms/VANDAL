@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Requirements</title>
+   </head>
+   <body>
+      {% if closed_requirements_list %}
+         <h2>Satisfied Requirements</h2>
+         <table>
+            <tr><th>Requirement</th><th>Credits Needed</th><th>Credits Taken</th></tr>
+            {% for req in closed_requirements_list %}
+               <tr><td>{{ req[0].course_rgx }}</td><td>{{ req[0].credits }}</td><td>{{ req[1] }}</td></tr>
+            {% endfor %}
+         </table>
+      {% else %}
+         <p>No requirements satisfied.</p>
+      {% endif %}
+      {% if open_requirements_list %}
+         <h2>Pending Requirements</h2>
+         <table>
+            <tr><th>Requirement</th><th>Credits Needed</th><th>Credits Taken</th></tr>
+            {% for req in open_requirements_list %}
+               <tr><td>{{ req[0].course_rgx }}</td><td>{{ req[0].credits }}</td><td>{{ req[1] }}</td></tr>
+            {% endfor %}
+         </table>
+      {% else %}
+         <p>No requirements pending.</p>
+      {% endif %}
+   </body>
+</html>

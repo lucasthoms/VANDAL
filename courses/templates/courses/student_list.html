@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+   {% load static %}
+   <head>
+      <title>Students</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'courses/default.css' %}">
+   </head>
+   <body>
+      <h1>VANDAL Advising Notebook</h1>
+         <h2>Students (<a href="/admin/courses/student/" target="_blank">edit</a>)</h2>
+         <table style="width: 100%;">
+            <colgroup>
+               <col style="width: 15%;">
+               <col style="width: 40%;">
+               <col style="width: 35%;">
+               <col style="width: 10%;">
+            </colgroup>
+            <tr><th>Student ID</th><th>Student</th><th>Degree</th><th>Open</th></tr>
+            {% for student in student_list %}
+               <tr>
+                  <td>{{ student.student_id }}</td>
+                  <td>{{ student.first_name }} {{ student.last_name }}</td>
+                  <td>{{ student.degree_type}} in {{ student.major_name }}</td>
+                  <td><a href="{% url 'requirement_list' student.student_id %}">Open</a></td>
+               </tr>
+            {% endfor %}
+         </table>
+         <br><br>
+         <h2>Degree Options (<a href="/admin/courses/requirement/" target="_blank">edit</a>)</h2>
+         <table style="width: 100%;">
+            <colgroup>
+               <col style="width: 40%;">
+               <col style="width: 40%;">
+               <col style="width: 20%;">
+            </colgroup>
+            <tr><th>Degree Type</th><th>Major</th><th>Required Courses</th></tr>
+            {% for degree in degree_list %}
+               <tr>
+                  <td>{{ degree.0 }}</td>
+                  <td>{{ degree.1 }}</td>
+                  <td><a href="{% url 'requirement_list' 0 %}">Open</a></td>
+               </tr>
+            {% endfor %}
+         </table>
+   </body>
+</html>

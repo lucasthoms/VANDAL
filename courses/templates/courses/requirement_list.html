@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+   {% load static %}
+   <head>
+      <title>Requirements</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'courses/default.css' %}">
+   </head>
+   <body>
+      <h1>Degree Progress</h1>
+      {% if student_details and student_details.name != '0' %}
+         <h2>{{ student_details.name }}: {{ student_details.degree }} (<a href="/admin/courses/taken/" target="_blank">edit courses</a>)</h2>
+      {% elif student_details.name != '0' %}
+         <h2>Student not found.</h2>
+      {% endif %}
+      {% if closed_requirements_list %}
+         <h2>Satisfied Requirements</h2>
+         <table style="width: 100%;">
+            <colgroup>
+               <col style="width: 30%;">
+               <col style="width: 40%;">
+               <col style="width: 15%;">
+               <col style="width: 15%;">
+            </colgroup>
+            <tr><th>Requirement</th><th>Courses Taken</th><th>Credits Taken</th><th>Credits Needed</th></tr>
+            {% for req in closed_requirements_list %}
+               <tr>
+                  <td>{{ req.0 }}</td>
+                  <td>
+                     {% for k, v in req.1.items %}
+                     <span style="cursor: help;" title="{{ v }}">{{ k }}</span>{% if not forloop.last %},{% endif %}
+                     {% endfor %}
+                  </td>
+                  <td>{{ req.2 }}</td>
+                  <td>{{ req.3 }}</td>
+               </tr>
+            {% endfor %}
+         </table>
+      {% elif student_details.name != '0' %}
+         <p>No requirements satisfied.</p>
+      {% endif %}
+      {% if open_requirements_list %}
+         {% if student_details.name == '0' %}
+            <h2>Full Requirements</h2>
+         {% else %}
+            <h2>Pending Requirements</h2>
+         {% endif %}
+         <table style="width: 100%;">
+            <colgroup>
+               <col style="width: 20%;">
+               <col style="width: 30%;">
+               <col style="width: 30%;">
+               <col style="width: 10%;">
+               <col style="width: 10%;">
+            </colgroup>
+            <tr><th>Requirement</th><th>Courses Taken</th><th>Course Options</th><th>Credits Taken</th><th>Credits Needed</th></tr>
+            {% for req in open_requirements_list %}
+               <tr>
+                  <td>{{ req.0 }}</td>
+                  <td>
+                     {% for k, v in req.1.items %}
+                     <span style="cursor: help;" title="{{ v }}">{{ k }}</span>{% if not forloop.last %},{% endif %}
+                     {% endfor %}
+                  </td>
+                  <td>
+                     {% for k, v in req.2.items %}
+                     <span {% if v.0 != '*' %} class="bold" {% endif %} style="cursor: help;" title="{{ v }}">
+                        {{ k }}</span>{% if not forloop.last %},{% endif %}
+                     {% endfor %}
+                  </td>
+                  <td>{{ req.3 }}</td>
+                  <td>{{ req.4 }}</td>
+               </tr>
+            {% endfor %}
+         </table>
+      {% else %}
+         <p>No requirements pending.</p>
+      {% endif %}
+   </body>
+</html>
